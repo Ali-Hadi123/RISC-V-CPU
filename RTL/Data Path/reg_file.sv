@@ -1,3 +1,5 @@
+import riscv_pkg::*;
+
 module regf (
   input clk,
   input [4:0] rs1, rs2, rd,
