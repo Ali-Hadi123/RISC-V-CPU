@@ -8,7 +8,7 @@ module regf (
   output [XLEN-1:0] rdata1, rdata2
 );
 
-  logic [XLEN-1:0] regs [0:31];
+  logic [XLEN-1:0] regs [0:REG_COUNT-1];
 
   assign rdata1 = (rs1 == 0) ? 0 : regs[rs1];
   assign rdata2 = (rs2 == 0) ? 0 : regs[rs2];
