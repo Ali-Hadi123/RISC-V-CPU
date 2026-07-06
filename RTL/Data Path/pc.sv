@@ -1,6 +1,6 @@
 module pc (
-    input logic clk,
-    input logic rst,
+    input clk,
+    input rst,
     input logic [31:0] next_pc,
     output logic [31:0] pc
 );
