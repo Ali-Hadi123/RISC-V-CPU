@@ -6,7 +6,7 @@ module imem #(
   output [31:0] instr
 );
 
-  logic [31:0] rom [0:1023]; //4KB memory space.
+  logic [31:0] rom [0:1023]; //Creates a 4KB memory space.
   integer i;
   
   initial begin
