@@ -7,4 +7,12 @@ module imem #(
 );
 
   logic [31:0] rom [0:1023]; //4KB memory space.
-  initial $readmemh(init_mem, rom);
+  integer i;
+  
+  initial begin
+    if (init_mem != "")
+      $readmemh(init_mem, rom);
+    else
+      for (i=0; i<1024; i++)
+        rom[i] = 32'h0000_0013; //Fills memory with NOP instructions (addi x0, x0, 0 in assembly) if no hex file is uploaded.
+  end
