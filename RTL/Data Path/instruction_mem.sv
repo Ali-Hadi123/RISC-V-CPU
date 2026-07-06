@@ -16,3 +16,6 @@ module imem #(
       for (i=0; i<1024; i++)
         rom[i] = 32'h0000_0013; //Fills memory with NOP instructions (addi x0, x0, 0 in assembly) if no hex file is uploaded.
   end
+  
+  assign instr = rom[pc_addr[11:2]]; //Dividing values by 4 as rom is word alligned and not byte alligned.
+endmodule
