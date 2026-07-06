@@ -1,3 +1,5 @@
+import riscv_pkg::*;
+
 module pc (
     input clk,
     input rst,
