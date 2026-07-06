@@ -18,4 +18,5 @@ module imem #(
   end
   
   assign instr = rom[pc_addr[11:2]]; //Dividing values by 4 as rom is word alligned and not byte alligned.
+  
 endmodule
