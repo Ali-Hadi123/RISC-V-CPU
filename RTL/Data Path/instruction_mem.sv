@@ -10,11 +10,10 @@ module imem #(
   integer i;
   
   initial begin
+    for (i=0; i<1024; i++)
+      rom[i] = 32'h0000_0013; //Preemptively fills rom with NOP instructions in case of a hex file less than 1024 words.
     if (init_mem != "")
-      $readmemh(init_mem, rom);
-    else
-      for (i=0; i<1024; i++)
-        rom[i] = 32'h0000_0013; //Fills memory with NOP instructions (addi x0, x0, 0 in assembly) if no hex file is uploaded.
+      $readmemh(init_mem, rom); //Overwrites NOP instructions with words from the hex file.
   end
   
   assign instr = rom[pc_addr[11:2]]; //Dividing values by 4 as rom is word alligned and not byte alligned.
