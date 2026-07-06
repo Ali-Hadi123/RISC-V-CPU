@@ -3,8 +3,8 @@ import riscv_pkg::*;
 module pc (
     input clk,
     input rst,
-    input logic [31:0] next_pc,
-    output logic [31:0] pc
+    input logic [XLEN-1:0] next_pc,
+    output logic [XLEN-1:0] pc
 );
 
 always_ff @(posedge clk or posedge rst)
