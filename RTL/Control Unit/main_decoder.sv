@@ -22,6 +22,8 @@ module main_decoder (
     branch     = 1'b0;
     jump       = 1'b0;
 
+    // Creating safe signals as a default case.
+    
     result_src = 2'b00;          // ALU result
     mem_write  = 1'b0;           // Never write memory by default
     alu_src    = 1'b0;           // Use register operand (RD2)
@@ -32,3 +34,4 @@ module main_decoder (
     case(op_code)
       OP_ARTH_REG: begin
         reg_write = 1'b1;
+        alu_src = 1'b0;
