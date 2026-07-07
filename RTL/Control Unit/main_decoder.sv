@@ -1,7 +1,7 @@
 import riscv_pkg::*;
 
 module main_decoder (
-  input opcode_e opcode,
+  input opcode_e op_code,
   input is_zero,
   output pc_src,
   output [1:0] result_src,
@@ -29,4 +29,6 @@ module main_decoder (
     reg_write  = 1'b0;           // Don't write registers
     alu_op     = 2'b00;          // Default ALU operation (typically ADD)
     
-    case(opcode)
+    case(op_code)
+      OP_ARTH_REG: begin
+        reg_write = 1'b1;
