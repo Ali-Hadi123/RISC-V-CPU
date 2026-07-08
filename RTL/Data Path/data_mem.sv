@@ -21,7 +21,7 @@ module dmem #(
   logic [1:0] byte_off;
   assign byte_off = addr[1:0];
 
-  //Code for writing data:
+  //Code for writing data (sw, sh, sb):
 
   always_ff @(posedge clk) begin
     if (mem_write) begin
@@ -47,4 +47,36 @@ module dmem #(
     end
   end
 
+  //Code for reading data (lw, lh, lb):
+  
+  logic [31:0] rword;
+  logic [15:0] rhalf;
+  logic [7:0] rbyte;
 
+  always_comb begin
+    word = ram[windex];
+    
+    unique case(byte_off)
+      2'b00: rbyte = word[7:0];
+      2'b01: rbyte = word[15:8];
+      2'b10: rbyte = word[23:16];
+      2'b11: rbyte = word[31:24];
+    endcase
+
+    unique case (byte_off[1])
+      1'b0: rhalf = word[15:0];
+      1'b1: rhalf = word[31:16];
+    endcase
+
+    read_data = '0;
+
+    if (mem_read) begin
+      unique case(mem_size)
+        MEM_BYTE: read_data = mem_unsigned ? {24'b0, rbyte} : {{24{rbyte[7]}}, rbyte};
+        MEM_HALF: read_data = mem_unsigned ? {16'b0, rhalf} : {{16{rhalf[15]}}, rhalf};
+        MEM_WORD: read_data = word;
+        default: read_data = '0;
+      endcase
+    end
+  end
+endmodule
