@@ -5,6 +5,7 @@ module main_decoder (
   input is_zero,
   output pc_src,
   output [1:0] result_src,
+  output mem_read,
   output mem_write,
   output alu_src,
   output instr_fmt_e [1:0] imm_src,
