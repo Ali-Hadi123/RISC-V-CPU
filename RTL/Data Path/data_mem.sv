@@ -19,7 +19,7 @@ module dmem #(
   logic [$clog2(memory_space)-1:0] windex;
   assign windex = addr[$clog2(memory_space)+1:2];
   logic [1:0] byte_off;
-  assign byte_off = addr[1:0];
+  assign byte_off = byte_addr[1:0];
 
   //Code for writing data (store instructions):
 
