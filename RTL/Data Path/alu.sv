@@ -31,6 +31,7 @@ module alu (
       ALU_SRL:    result = a >> b[4:0];
       ALU_SRA:    result = $signed(a) >>> b[4:0];
       ALU_PASS_B: result = b;
+      default: result = '0;
     endcase
   end
 
