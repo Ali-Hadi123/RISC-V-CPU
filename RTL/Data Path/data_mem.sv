@@ -17,7 +17,7 @@ module dmem #(
   logic [XLEN-1:0] ram [0:memory_space-1]; //Creates 4KB of memory when memory_space = 1024.
   
   logic [$clog2(memory_space)-1:0] windex;
-  assign windex = addr[$clog2(memory_space)+1:2];
+  assign windex = byte_addr[$clog2(memory_space)+1:2];
   logic [1:0] byte_off;
   assign byte_off = byte_addr[1:0];
 
@@ -43,6 +43,7 @@ module dmem #(
         end
 
         MEM_WORD: ram[windex] <= wdata;
+        
       endcase
     end
   end
@@ -54,18 +55,18 @@ module dmem #(
   logic [7:0] rbyte;
 
   always_comb begin
-    word = ram[windex];
+    rword = ram[windex];
     
     unique case(byte_off)
-      2'b00: rbyte = word[7:0];
-      2'b01: rbyte = word[15:8];
-      2'b10: rbyte = word[23:16];
-      2'b11: rbyte = word[31:24];
+      2'b00: rbyte = rword[7:0];
+      2'b01: rbyte = rword[15:8];
+      2'b10: rbyte = rword[23:16];
+      2'b11: rbyte = rword[31:24];
     endcase
 
     unique case (byte_off[1])
-      1'b0: rhalf = word[15:0];
-      1'b1: rhalf = word[31:16];
+      1'b0: rhalf = rword[15:0];
+      1'b1: rhalf = rword[31:16];
     endcase
 
     read_data = '0;
@@ -74,7 +75,7 @@ module dmem #(
       unique case(mem_size)
         MEM_BYTE: read_data = mem_unsigned ? {24'b0, rbyte} : {{24{rbyte[7]}}, rbyte};
         MEM_HALF: read_data = mem_unsigned ? {16'b0, rhalf} : {{16{rhalf[15]}}, rhalf};
-        MEM_WORD: read_data = word;
+        MEM_WORD: read_data = rword;
         default: read_data = '0;
       endcase
     end
