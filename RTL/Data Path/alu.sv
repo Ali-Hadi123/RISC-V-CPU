@@ -5,7 +5,7 @@ module alu (
   input [XLEN-1:0] a,
   input [XLEN-1:0] b,
   output logic [XLEN-1:0] result,
-  output logic zero
+  output logic is_zero
 );
 
   logic [XLEN-1:0] sum;
@@ -33,3 +33,7 @@ module alu (
       ALU_PASS_B: result = b;
     endcase
   end
+
+  assign is_zero = (result == '0);
+
+endmodule
