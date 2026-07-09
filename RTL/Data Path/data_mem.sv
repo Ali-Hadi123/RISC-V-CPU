@@ -21,7 +21,7 @@ module dmem #(
   logic [1:0] byte_off;
   assign byte_off = addr[1:0];
 
-  //Code for writing data (sw, sh, sb):
+  //Code for writing data (store instructions):
 
   always_ff @(posedge clk) begin
     if (mem_write) begin
@@ -47,7 +47,7 @@ module dmem #(
     end
   end
 
-  //Code for reading data (lw, lh, lb):
+  //Code for reading data (load instructions):
   
   logic [31:0] rword;
   logic [15:0] rhalf;
