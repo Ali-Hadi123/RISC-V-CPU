@@ -10,7 +10,7 @@ module alu (
 
   logic [XLEN-1:0] sum;
   logic cout;
-
+  
   always_comb begin
     if (alu_ctrl == ALU_ADD)
       {cout, sum} = {1'b0, a} + {1'b0,  b};
