@@ -7,7 +7,7 @@ module main_decoder (
   input is_less_u,
   
   output pc_src,
-  output [1:0] result_src,
+  output result_src_e result_src,
   output mem_read,
   output mem_write,
   output alu_src,
@@ -29,26 +29,79 @@ module main_decoder (
 
     // Creating safe signals as a default case.
     
-    result_src = 2'b00;          // ALU result
+    result_src = RESULT_ALU;          // ALU result
     mem_write  = 1'b0;           // Never write memory by default
     alu_src    = 1'b0;           // Use register operand (RD2)
     imm_src    = FMT_I;          // Doesn't matter unless ALUSrc=1
     reg_write  = 1'b0;           // Don't write registers
-    alu_op     = 2'b00;          // Default ALU operation (typically ADD)
+    alu_op     = ALUOP_ADD;          // Default ALU operation (typically ADD)
     
     case(op_code)
       OP_ARTH_REG: begin
-        reg_write = 1'b1;
+        result_src = RESULT_ALU;
+        mem_write = 1'b0;
         alu_src = 1'b0;
-        result_src = 2'b00;
+        imm_src = FMT_I;
+        reg_write = 1'b1;
         alu_op = ALUOP_FUNCT;
       end
 
       OP_ARTH_IMM: begin
-        reg_write = 1'b1;
+        result_src = RESULT_ALU;
+        mem_write = 1'b0;
         alu_src = 1'b1;
         imm_src = FMT_I;
-        result_src = 2'b00;
-        alu_op = ALUOP_FUNCT;
+        reg_write = 1'b1;
+        alu_op = ALUOP_ADD;
+      end
+
+      OP_LOAD: begin
+        result_src = RESULT_MEM;
+        mem_write = 1'b0;
+        alu_src = 1'b1;
+        imm_src = FMT_I;
+        reg_write = 1'b1;
+        alu_op = ALUOP_ADD;
+      end
+
+      OP_STORE: begin
+        result_src = RESULT_ALU;
+        mem_write = 1'b1;
+        alu_src = 1'b1;
+        imm_src = FMT_S;
+        reg_write = 1'b0;
+        alu_op = ALUOP_ADD;
+      end
+
+      OP_BRANCH: begin
+        branch = 1'b1;
         
+        result_src = RESULT_ALU;
+        mem_write = 1'b0;
+        alu_src = 1'b0;
+        imm_src = FMT_B;
+        reg_write = 1'b0;
+        alu_op = ALUOP_BRANCH;
+      end
+
+      OP_JAL: begin
+        jump = 1'b1;
         
+        result_src = RESULT_PCPLUS4;
+        mem_write = 1'b0;
+        alu_src = 1'b0;
+        imm_src = FMT_J;
+        reg_write = 1'b1;
+        alu_op = ALUOP_ADD;
+      end
+
+      OP_JALR: begin
+        jump = 1'b1;
+        
+        result_src = RESULT_PCPLUS4;
+        mem_write = 1'b0;
+        alu_src = 1'b1;
+        imm_src = FMT_I;
+        reg_write = 1'b1;
+        alu_op = ALUOP_ADD;
+      end
