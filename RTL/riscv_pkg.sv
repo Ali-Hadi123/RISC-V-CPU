@@ -93,6 +93,12 @@ package riscv_pkg;
   } alu_ctrl_e;
 
   typedef enum logic [1:0] {
+    RESULT_ALU     = 2'b00,
+    RESULT_MEM     = 2'b01,
+    RESULT_PCPLUS4 = 2'b10
+} result_src_e;
+
+  typedef enum logic [1:0] {
     ALU_SRC_A_RS1,
     ALU_SRC_A_PC,
     ALU_SRC_A_ZERO
