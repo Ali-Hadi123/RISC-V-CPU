@@ -41,5 +41,14 @@ module main_decoder (
         reg_write = 1'b1;
         alu_src = 1'b0;
         result_src = 2'b00;
+        alu_op = ALUOP_FUNCT;
+      end
+
+      OP_ARTH_IMM: begin
+        reg_write = 1'b1;
+        alu_src = 1'b1;
+        imm_src = FMT_I;
+        result_src = 2'b00;
+        alu_op = ALUOP_FUNCT;
         
         
