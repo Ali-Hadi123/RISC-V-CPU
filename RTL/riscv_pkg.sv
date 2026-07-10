@@ -71,6 +71,13 @@ package riscv_pkg;
     FMT_J
   } instr_fmt_e;
 
+  typedef enum logic [1:0] {
+     ALUOP_ADD,
+    ALUOP_BRANCH,
+    ALUOP_FUNCT,
+    ALUOP_ADD_PC
+} alu_op_e;
+  
   typedef enum logic [3:0] { 
     ALU_ADD,
     ALU_SUB,
@@ -83,7 +90,7 @@ package riscv_pkg;
     ALU_OR,
     ALU_AND,
     ALU_PASS_B
-  } alu_op_e;
+  } alu_ctrl_e;
 
   typedef enum logic [1:0] {
     ALU_SRC_A_RS1,
