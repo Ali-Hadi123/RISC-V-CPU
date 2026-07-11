@@ -105,3 +105,24 @@ module main_decoder (
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
       end
+
+      OP_LUI: begin
+        result_src = RESULT_ALU;        
+        mem_write  = 1'b0;         
+        alu_src    = 1'b1;        
+        imm_src    = FMT_U;       
+        reg_write  = 1'b1;           
+        alu_op     = ALUOP_PASS_B;
+      end
+
+      OP_AUIPC: begin
+        result_src = RESULT_ALU;        
+        mem_write  = 1'b0;         
+        alu_src    = 1'b1;        
+        imm_src    = FMT_U;       
+        reg_write  = 1'b1;           
+        alu_op     = ALUOP_ADD_PC;
+      end
+    endcase
+  end
+endmodule
