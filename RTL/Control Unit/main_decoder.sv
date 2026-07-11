@@ -2,6 +2,7 @@ import riscv_pkg::*;
 
 module main_decoder (
   input opcode_e op_code,
+  input logic [2:0] funct3,
   input is_zero,
   input is_less,
   input is_less_u,
@@ -18,9 +19,8 @@ module main_decoder (
 );
 
   logic branch;
+  logic branch_taken;
   logic jump;
-
-  assign pc_src = (branch & is_zero) | jump;
   
   always_comb begin
     
