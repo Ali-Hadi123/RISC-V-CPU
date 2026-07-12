@@ -1,10 +1,38 @@
 import riscv_pkg::*;
 
 module alu_decoder (
+  input opcode_e op_code,
   input alu_op_e alu_op,
-  input logic [2:0] funct3,
-  input logic [6:0] funct7,
+  input funct3_arth_e funct3,
+  input funct7_e funct7,
   output alu_ctrl_e alu_ctrl
 );
 
-  
+  logic is_R_type;
+  assign is_R_type = (op_code == OP_ARTH_REG);
+
+  always_comb begin
+    unique case(alu_op)
+      ALUOP_ADD: alu_ctrl = ALU_ADD;
+      ALUOP_BRANCH: alu_ctrl = ALU_SUB;
+      ALUOP_ADD_PC: alu_ctrl = ALU_ADD;
+      ALUOP_PASS_B: alu_ctrl = ALU_PASS_B;
+      
+      ALUOP_FUNCT: begin
+        unique case(funct3)
+          F3_ADD_SUB: (is_R_type && funct7 = F7_ALT) ? ALU_SUB : ALU_ADD;
+          F3_SLL: alu_ctrl = ALU_SLL;
+          F3_SLT: alu_ctrl = ALU_SLT;
+          F3_SLTU: alu_ctrl = ALU_SLTU;
+          F3_XOR: alu_ctrl = ALU_XOR;
+          F3_SRL_SRA: alu_ctrl = (funct7 == F7_ALT) ? ALU_SRA : ALU_SRL;
+          F3_OR: alu_ctrl = ALU_OR;
+          F3_AND: alu_ctrl = ALU_AND;
+        endcase
+      end
+
+      default: alu_ctrl = ALU_ADD;
+    endcase
+  end
+endmodule
+
