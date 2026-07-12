@@ -7,13 +7,13 @@ module main_decoder (
   output mem_read,
   output mem_write,
   output alu_src,
-  output instr_fmt_e [1:0] imm_src,
+  output instr_fmt_e imm_src,
   output reg_write,
 
   output branch,
   output jump,
   
-  output [1:0] alu_op
+  output alu_op_e alu_op
 );
   
   always_comb begin
