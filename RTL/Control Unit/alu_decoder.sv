@@ -11,8 +11,8 @@ module alu_decoder (
   logic is_R_type;                             
   assign is_R_type = (op_code == OP_ARTH_REG);
 
-  //"is_R_type" is required to ensure that the ALU decoder does not try to read the non-existant funct7 of an I type instruction as both
-  //I and R type instructions output ALUOP_FUNCT and have F3_ADD_SUB.
+  //"is_R_type" is required to ensure that the ALU decoder does not try to read the non-existant funct7 
+  //of an I type instruction as both I and R type instructions output ALUOP_FUNCT and have F3_ADD_SUB.
   
   always_comb begin
     unique case(alu_op)
