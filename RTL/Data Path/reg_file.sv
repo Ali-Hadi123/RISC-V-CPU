@@ -2,7 +2,7 @@ import riscv_pkg::*;
 
 module regf (
   input clk,
-  input [REG_ADDER_W-1:0] rs1, rs2, rd,
+  input [REG_ADDR_W-1:0] rs1, rs2, rd,
   input [XLEN-1:0] wd,
   input we,
   output [XLEN-1:0] rdata1, rdata2
