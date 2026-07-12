@@ -23,7 +23,7 @@ module alu_decoder (
       
       ALUOP_FUNCT: begin
         unique case(funct3)
-          F3_ADD_SUB: (is_R_type && funct7 == F7_ALT) ? ALU_SUB : ALU_ADD;
+          F3_ADD_SUB: alu_ctrl = (is_R_type && funct7 == F7_ALT) ? ALU_SUB : ALU_ADD;
           F3_SLL: alu_ctrl = ALU_SLL;
           F3_SLT: alu_ctrl = ALU_SLT;
           F3_SLTU: alu_ctrl = ALU_SLTU;
