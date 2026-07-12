@@ -75,7 +75,7 @@ package riscv_pkg;
     ALUOP_ADD,
     ALUOP_BRANCH,
     ALUOP_FUNCT,
-    ALUOP_ADD_PC
+    ALUOP_ADD_PC,
     ALUOP_PASS_B
 } alu_op_e;
   
