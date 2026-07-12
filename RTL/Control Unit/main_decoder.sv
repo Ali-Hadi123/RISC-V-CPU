@@ -46,7 +46,7 @@ module main_decoder (
         alu_src = 1'b1;
         imm_src = FMT_I;
         reg_write = 1'b1;
-        alu_op = ALUOP_ADD;
+        alu_op = ALUOP_FUNCT;
       end
 
       OP_LOAD: begin
