@@ -83,7 +83,7 @@ module main_decoder (
         
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
-        alu_src = 1'b0;
+        alu_src = 1'b1;
         imm_src = FMT_J;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
