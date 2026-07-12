@@ -1,7 +1,7 @@
 import riscv_pkg::*;
 
 module alu (
-  input alu_op_e alu_ctrl,
+  input alu_ctrl_e alu_ctrl,
   input [XLEN-1:0] a,
   input [XLEN-1:0] b,
   output logic [XLEN-1:0] result,
