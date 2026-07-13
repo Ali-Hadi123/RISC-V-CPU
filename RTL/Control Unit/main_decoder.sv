@@ -9,7 +9,7 @@ module main_decoder (
   output logic alu_src,
   output instr_fmt_e imm_src,
   output logic reg_write,
-  output logic illeagal_instr,
+  output logic illegal_instr,
 
   output logic branch,
   output logic jump,
@@ -31,7 +31,7 @@ module main_decoder (
     imm_src    = FMT_I;          // Doesn't matter unless ALUSrc=1
     reg_write  = 1'b0;           // Don't write registers
     alu_op     = ALUOP_ADD;      // Default ALU operation (typically ADD)
-    illeagal_instr = 1'b0;       // Assumes valid instruction
+    illegal_instr = 1'b0;       // Assumes valid instruction
     
     unique case(op_code)
       OP_ARTH_REG: begin
@@ -42,7 +42,7 @@ module main_decoder (
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_FUNCT;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_ARTH_IMM: begin
@@ -53,7 +53,7 @@ module main_decoder (
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_FUNCT;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_LOAD: begin
@@ -64,7 +64,7 @@ module main_decoder (
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_STORE: begin
@@ -75,7 +75,7 @@ module main_decoder (
         imm_src = FMT_S;
         reg_write = 1'b0;
         alu_op = ALUOP_ADD;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_BRANCH: begin
@@ -88,7 +88,7 @@ module main_decoder (
         imm_src = FMT_B;
         reg_write = 1'b0;
         alu_op = ALUOP_BRANCH;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_JAL: begin
@@ -101,7 +101,7 @@ module main_decoder (
         imm_src = FMT_J;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_JALR: begin
@@ -114,7 +114,7 @@ module main_decoder (
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_LUI: begin
@@ -125,7 +125,7 @@ module main_decoder (
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
         alu_op     = ALUOP_PASS_B;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       OP_AUIPC: begin
@@ -136,7 +136,7 @@ module main_decoder (
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
         alu_op     = ALUOP_ADD_PC;
-        illeagal_instr = 1'b0;
+        illegal_instr = 1'b0;
       end
 
       //Although allowing fence and system instructions to be handled by the default would not alter 
