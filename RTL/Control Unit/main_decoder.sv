@@ -139,6 +139,12 @@ module main_decoder (
         illeagal_instr = 1'b0;
       end
 
+      //Although allowing fence and system instructions to be handled by the default would not alter 
+      //functionality, seperating them allows for the true, illegal instructions to be more easily flagged.
+      
+      OP_FENCE: ;  
+      OP_SYSTEM: ; 
+
       default: illeagal_instr = 1'b1;
     endcase
   end
