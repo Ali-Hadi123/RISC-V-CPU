@@ -33,7 +33,7 @@ module main_decoder (
     alu_op     = ALUOP_ADD;      // Default ALU operation (typically ADD)
     illeagal_instr = 1'b0;       // Assumes valid instruction
     
-    case(op_code)
+    unique case(op_code)
       OP_ARTH_REG: begin
         result_src = RESULT_ALU;
         mem_write = 1'b0;
@@ -145,7 +145,7 @@ module main_decoder (
       OP_FENCE: ;  
       OP_SYSTEM: ; 
 
-      default: illeagal_instr = 1'b1;
+      default: illegal_instr = 1'b1;
     endcase
   end
 endmodule
