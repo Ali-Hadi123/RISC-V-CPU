@@ -108,7 +108,8 @@ package riscv_pkg;
     WB_SRC_ALU,
     WB_SRC_MEM,
     WB_SRC_PC_PLUS4,
-    WB_SRC_IMM
+    WB_SRC_IMM,
+    WB_SRC_PC_TARGET
   } wb_src_e;
 
   typedef enum logic [1:0] {
@@ -126,8 +127,7 @@ package riscv_pkg;
     logic       branch;         // is a conditional branch
     logic       jump;           // is an unconditional jump (JAL/JALR)
     alu_op_e    alu_op;
-    alu_src_a_e alu_src_a;
-    alu_src_b_e alu_src_b;
+    alu_src_e   alu_src;
     wb_src_e    wb_src;
     logic       illegal_instr;  // decoder could not recognize the opcode
   } ctrl_t;
