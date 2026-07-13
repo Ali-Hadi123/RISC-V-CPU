@@ -112,19 +112,6 @@ package riscv_pkg;
     MEM_WORD
   } mem_size_e;
 
-  typedef struct packed {
-    logic       reg_write;      // write result back to rd
-    logic       mem_read;       // load from data memory
-    logic       mem_write;      // store to data memory
-    logic       mem_unsigned;   // zero- vs sign-extend loaded data
-    mem_size_e  mem_size;       // byte / half / word
-    logic       branch;         // is a conditional branch
-    logic       jump;           // is an unconditional jump (JAL/JALR)
-    alu_op_e    alu_op;
-    alu_src_e   alu_src;
-    logic       illegal_instr;  // decoder could not recognize the opcode
-  } ctrl_t;
-
   // Instruction field extraction helpers.
   
   function automatic logic [6:0] get_opcode(input logic [ILEN-1:0] instr);
