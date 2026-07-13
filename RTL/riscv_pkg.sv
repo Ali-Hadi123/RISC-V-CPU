@@ -93,24 +93,18 @@ package riscv_pkg;
     ALU_PASS_B
   } alu_ctrl_e;
 
-  typedef enum logic [1:0] {
-    RESULT_ALU     = 2'b00,
-    RESULT_MEM     = 2'b01,
-    RESULT_PCPLUS4 = 2'b10
+  typedef enum logic [2:0] {
+    RESULT_ALU,     
+    RESULT_MEM,
+    RESULT_PCPLUS4,
+    RESULT_IMM,
+    RESULT_PC_TARGET
 } result_src_e;
 
   typedef enum logic {
     ALU_SRC_RS2,
     ALU_SRC_IMM
   } alu_src_e;
-
-  typedef enum logic [1:0] {
-    WB_SRC_ALU,
-    WB_SRC_MEM,
-    WB_SRC_PC_PLUS4,
-    WB_SRC_IMM,
-    WB_SRC_PC_TARGET
-  } wb_src_e;
 
   typedef enum logic [1:0] {
     MEM_BYTE,
@@ -128,7 +122,6 @@ package riscv_pkg;
     logic       jump;           // is an unconditional jump (JAL/JALR)
     alu_op_e    alu_op;
     alu_src_e   alu_src;
-    wb_src_e    wb_src;
     logic       illegal_instr;  // decoder could not recognize the opcode
   } ctrl_t;
 
