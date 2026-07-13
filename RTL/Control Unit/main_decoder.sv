@@ -25,6 +25,7 @@ module main_decoder (
     
     result_src = RESULT_ALU;     // ALU result
     mem_write  = 1'b0;           // Never write memory by default
+    mem_read   = 1'b0;           // Never load memory by default
     alu_src    = 1'b0;           // Use register operand (RD2)
     imm_src    = FMT_I;          // Doesn't matter unless ALUSrc=1
     reg_write  = 1'b0;           // Don't write registers
@@ -34,6 +35,7 @@ module main_decoder (
       OP_ARTH_REG: begin
         result_src = RESULT_ALU;
         mem_write = 1'b0;
+        mem_read   = 1'b0;
         alu_src = 1'b0;
         imm_src = FMT_I;
         reg_write = 1'b1;
@@ -43,6 +45,7 @@ module main_decoder (
       OP_ARTH_IMM: begin
         result_src = RESULT_ALU;
         mem_write = 1'b0;
+        mem_read   = 1'b0;
         alu_src = 1'b1;
         imm_src = FMT_I;
         reg_write = 1'b1;
@@ -52,6 +55,7 @@ module main_decoder (
       OP_LOAD: begin
         result_src = RESULT_MEM;
         mem_write = 1'b0;
+        mem_read   = 1'b1;
         alu_src = 1'b1;
         imm_src = FMT_I;
         reg_write = 1'b1;
@@ -61,6 +65,7 @@ module main_decoder (
       OP_STORE: begin
         result_src = RESULT_ALU;
         mem_write = 1'b1;
+        mem_read   = 1'b0;
         alu_src = 1'b1;
         imm_src = FMT_S;
         reg_write = 1'b0;
@@ -72,6 +77,7 @@ module main_decoder (
         
         result_src = RESULT_ALU;
         mem_write = 1'b0;
+        mem_read   = 1'b0;
         alu_src = 1'b0;
         imm_src = FMT_B;
         reg_write = 1'b0;
@@ -83,6 +89,7 @@ module main_decoder (
         
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
+        mem_read   = 1'b0;
         alu_src = 1'b1;
         imm_src = FMT_J;
         reg_write = 1'b1;
@@ -94,6 +101,7 @@ module main_decoder (
         
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
+        mem_read   = 1'b0;
         alu_src = 1'b1;
         imm_src = FMT_I;
         reg_write = 1'b1;
@@ -102,7 +110,8 @@ module main_decoder (
 
       OP_LUI: begin
         result_src = RESULT_ALU;        
-        mem_write  = 1'b0;         
+        mem_write  = 1'b0;     
+        mem_read   = 1'b0;
         alu_src    = 1'b1;        
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
@@ -111,7 +120,8 @@ module main_decoder (
 
       OP_AUIPC: begin
         result_src = RESULT_PCTARGET;        
-        mem_write  = 1'b0;         
+        mem_write  = 1'b0;        
+        mem_read   = 1'b0;
         alu_src    = 1'b1;        
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
