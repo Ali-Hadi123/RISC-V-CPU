@@ -154,5 +154,4 @@ package riscv_pkg;
       default:             get_fmt = FMT_I;
     endcase
   endfunction
-
-endpackage : riscv_pkg
+endpackage
