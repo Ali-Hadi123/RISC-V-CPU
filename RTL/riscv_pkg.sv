@@ -98,7 +98,7 @@ package riscv_pkg;
     RESULT_MEM,
     RESULT_PCPLUS4,
     RESULT_IMM,
-    RESULT_PC_TARGET
+    RESULT_PCTARGET
 } result_src_e;
 
   typedef enum logic {
@@ -149,26 +149,6 @@ package riscv_pkg;
 
   function automatic logic [6:0] get_funct7(input logic [ILEN-1:0] instr);
     return instr[31:25];
-  endfunction
-
-
-  // Immediate generator - sign/zero extends the correct bit field for the given instruction format.
-
-  function automatic logic [XLEN-1:0] get_imm (
-    input logic [ILEN-1:0]  instr,
-    input instr_fmt_e       fmt
-  );
-    
-    logic [XLEN-1:0] imm;
-    unique case (fmt)
-      FMT_I:   imm = {{21{instr[31]}}, instr[30:20]};
-      FMT_S:   imm = {{21{instr[31]}}, instr[30:25], instr[11:7]};
-      FMT_B:   imm = {{20{instr[31]}}, instr[7], instr[30:25], instr[11:8], 1'b0};
-      FMT_U:   imm = {instr[31:12], 12'b0};
-      FMT_J:   imm = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0};
-      default: imm = '0;   // FMT_R has no immediate
-    endcase
-    return imm;
   endfunction
 
   function automatic instr_fmt_e get_fmt(input logic [6:0] opcode);
