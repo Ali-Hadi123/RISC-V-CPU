@@ -1,5 +1,5 @@
 // ============================================================================
-// alu_tb.sv - Self-checking testbench for the RV32I ALU (RTL/Data Path/alu.sv)
+// alu_tb.sv - Self-checking testbench for ALU
 //
 // Compile order (example, Questa/ModelSim):
 //   vlog RTL/riscv_pkg.sv
@@ -16,24 +16,20 @@
 //   - Directed tests hit each opcode plus known corner cases (overflow,
 //     sign-extension, shift-amount truncation, zero flag, etc).
 //   - A randomized loop follows for broader coverage.
-// ============================================================================
 
 import riscv_pkg::*;
 
 module alu_tb;
 
-  // ---------------- DUT signals ----------------
   alu_ctrl_e        alu_ctrl;
   logic [XLEN-1:0]  a, b;
   logic [XLEN-1:0]  result;
   logic             is_zero, is_less, is_less_u;
 
-  // ---------------- Bookkeeping ----------------
   int unsigned test_count = 0;
   int unsigned pass_count = 0;
   int unsigned fail_count = 0;
 
-  // ---------------- DUT instantiation ----------------
   alu dut (
     .alu_ctrl  (alu_ctrl),
     .a         (a),
@@ -78,8 +74,6 @@ module alu_tb;
 
     exp_result = model_result(ctrl, a_in, b_in);
     exp_zero   = (exp_result == '0);
-    // is_less / is_less_u are computed unconditionally from a,b in the DUT,
-    // independent of alu_ctrl - the model reflects that here too.
     exp_less   = ($signed(a_in) < $signed(b_in));
     exp_lessu  = (a_in < b_in);
 
@@ -101,10 +95,6 @@ module alu_tb;
 
   // ---------------- Test sequence ----------------
   initial begin
-
-    $dumpfile("alu.vcd");
-    $dumpvars(0, alu_tb);
-    
     $display("========================================");
     $display(" ALU Testbench Starting");
     $display("========================================");
@@ -170,10 +160,6 @@ module alu_tb;
     run_test("PASS_B zero",           ALU_PASS_B, 32'hFFFF_FFFF, 32'h0000_0000);
 
     // ---------------- Flag decoupling ----------------
-    // is_less / is_less_u are combinational functions of a,b only - they
-    // must be correct even when alu_ctrl selects an unrelated operation
-    // (this matters for BLT/BGE/BLTU/BGEU, which read these flags directly
-    // instead of routing through the ALU result).
     run_test("is_less valid during AND",  ALU_AND, -32'sd1, 32'd5);
     run_test("is_less_u valid during OR", ALU_OR,  32'd1,   32'hFFFF_FFFF);
     run_test("zero flag via SUB equal",   ALU_SUB, 32'd100, 32'd100);
@@ -187,7 +173,7 @@ module alu_tb;
     for (int i = 0; i < 200; i++) begin
       alu_ctrl_e       rand_ctrl;
       logic [XLEN-1:0] rand_a, rand_b;
-      rand_ctrl = alu_ctrl_e'($urandom_range(0, 10)); // 11 legal opcodes: ALU_ADD..ALU_PASS_B
+      rand_ctrl = alu_ctrl_e'($urandom_range(0, 10));
       rand_a    = $urandom();
       rand_b    = $urandom();
       run_test($sformatf("random_%0d", i), rand_ctrl, rand_a, rand_b);
