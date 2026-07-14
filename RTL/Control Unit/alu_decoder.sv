@@ -6,6 +6,7 @@ module alu_decoder (
   input funct3_arth_e funct3,
   input funct7_e funct7,
   output alu_ctrl_e alu_ctrl
+  output logic illegal_instr_alu
 );
 
   logic is_R_type;                             
@@ -15,6 +16,8 @@ module alu_decoder (
   //of an I type instruction as both I and R type instructions output ALUOP_FUNCT and have F3_ADD_SUB.
   
   always_comb begin
+    illegal_instr_alu = 1'b0;
+    
     unique case(alu_op)
       ALUOP_ADD: alu_ctrl = ALU_ADD;
       ALUOP_BRANCH: alu_ctrl = ALU_SUB;
@@ -34,7 +37,9 @@ module alu_decoder (
         endcase
       end
 
-      default: alu_ctrl = ALU_ADD;
+      default: begin
+        alu_ctrl = ALU_ADD;
+        illegal_instr_alu = 1'b1;
     endcase
   end
 endmodule
