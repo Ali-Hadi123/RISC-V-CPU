@@ -33,9 +33,11 @@ module alu_tb;
     .is_less_u (is_less_u)
   );
 
-  // ---------------- Reference model ----------------
-  // Mirrors the *intended* RV32I ALU behavior, independent of the DUT's
-  // internal implementation (e.g. its shared adder/subtractor).
+  initial begin
+    $dumpfile("alu_tb.vcd");
+    $dumpvars(0, alu_tb);
+  end
+
   function automatic logic [XLEN-1:0] model_result(input alu_ctrl_e ctrl,
                                                      input logic [XLEN-1:0] a_in, b_in);
     case (ctrl)
