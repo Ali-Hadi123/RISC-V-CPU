@@ -1,11 +1,4 @@
-// ============================================================================
 // alu_tb.sv - Self-checking testbench for ALU
-//
-// Compile order (example, Questa/ModelSim):
-//   vlog RTL/riscv_pkg.sv
-//   vlog "RTL/Data Path/alu.sv"
-//   vlog alu_tb.sv
-//   vsim -c alu_tb -do "run -all; quit"
 //
 // Strategy:
 //   - A reference model (model_result) reimplements the expected ALU
