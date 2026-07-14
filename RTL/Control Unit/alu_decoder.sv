@@ -5,7 +5,7 @@ module alu_decoder (
   input alu_op_e alu_op,
   input funct3_arth_e funct3,
   input funct7_e funct7,
-  output alu_ctrl_e alu_ctrl
+  output alu_ctrl_e alu_ctrl,
   output logic illegal_instr_alu
 );
 
@@ -40,6 +40,7 @@ module alu_decoder (
       default: begin
         alu_ctrl = ALU_ADD;
         illegal_instr_alu = 1'b1;
+      end
     endcase
   end
 endmodule
