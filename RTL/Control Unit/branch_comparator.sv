@@ -6,11 +6,11 @@ module branch_comp (
   input logic is_less,
   input logic is_less_u,
   output logic branch_taken,
-  output logic illegal_branch
+  output logic illegal_instr_branch
 );
 
   always_comb begin
-    illegal_branch = 1'b0;
+    illegal_instr_branch = 1'b0;
     
     unique case(funct3)
         F3_BEQ:  branch_taken = is_zero;
@@ -22,7 +22,7 @@ module branch_comp (
         
         default: begin
           branch_taken = 1'b0;
-          illegal_branch = 1'b1;
+          illegal_instr_branch = 1'b1;
     endcase
   end
 endmodule
