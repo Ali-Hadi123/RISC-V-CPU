@@ -49,9 +49,11 @@ module mem_decoder (
           F3_SB: mem_size = MEM_BYTE;
           F3_SH: mem_size = MEM_HALF;
           F3_SW: mem_size = MEM_WORD;
+          
           default: begin
             mem_size = MEM_WORD;
             illegal_instr_mem = 1'b1;
+          end
         endcase
       end
 
