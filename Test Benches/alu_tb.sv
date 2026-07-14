@@ -101,6 +101,10 @@ module alu_tb;
 
   // ---------------- Test sequence ----------------
   initial begin
+
+    $dumpfile("alu.vcd");
+    $dumpvars(0, alu_tb);
+    
     $display("========================================");
     $display(" ALU Testbench Starting");
     $display("========================================");
