@@ -23,6 +23,7 @@ module branch_comp (
         default: begin
           branch_taken = 1'b0;
           illegal_instr_branch = 1'b1;
+        end
     endcase
   end
 endmodule
