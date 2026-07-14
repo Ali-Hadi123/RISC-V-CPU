@@ -4,12 +4,14 @@ module mem_decoder (
   input opcode_e op_code,
   input logic [2:0] funct3,
   output mem_size_e mem_size,
-  output logic mem_unsigned
+  output logic mem_unsigned,
+  output logic invalid_funct3
 );
 
   always_comb begin
     mem_size = MEM_WORD;  //Safe defaults.
     mem_unsigned = 1'b0;
+    invalid_funct3 = 1'b0;
 
     unique case(op_code)
       OP_LOAD: begin
@@ -37,6 +39,7 @@ module mem_decoder (
           default: begin
             mem_size = MEM_WORD;
             mem_unsigned = 1'b0;
+            invalid_funct3 = 1'b1;
           end
         endcase
       end
@@ -46,7 +49,9 @@ module mem_decoder (
           F3_SB: mem_size = MEM_BYTE;
           F3_SH: mem_size = MEM_HALF;
           F3_SW: mem_size = MEM_WORD;
-          default: mem_size = MEM_WORD;
+          default: begin
+            mem_size = MEM_WORD;
+            invalid_funct3 = 1'b1;
         endcase
       end
 
