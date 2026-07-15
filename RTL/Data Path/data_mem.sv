@@ -1,7 +1,7 @@
 import riscv_pkg::*;
 
 module dmem #(
-  parameter int unsigned memory_space = 1024
+  parameter int unsigned ram_size = 1024
 )
 (
   input clk,
@@ -14,10 +14,10 @@ module dmem #(
   output logic [XLEN-1:0] read_data
 );
 
-  logic [XLEN-1:0] ram [0:memory_space-1]; //Creates 4KB of memory when memory_space = 1024.
+  logic [XLEN-1:0] ram [0:ram_size-1]; //Creates 4KB of memory when ram_size = 1024.
   
-  logic [$clog2(memory_space)-1:0] windex;
-  assign windex = byte_addr[$clog2(memory_space)+1:2];
+  logic [$clog2(ram_size)-1:0] windex;
+  assign windex = byte_addr[$clog2(ram_size)+1:2];
   logic [1:0] byte_off;
   assign byte_off = byte_addr[1:0];
 
