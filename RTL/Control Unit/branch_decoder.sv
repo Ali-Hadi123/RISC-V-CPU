@@ -1,6 +1,6 @@
 import riscv_pkg::*;
 
-module branch_comp (
+module branch_decoder (
   input funct3_branch_e funct3,
   input logic is_zero,
   input logic is_less,
