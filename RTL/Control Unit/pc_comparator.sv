@@ -1,4 +1,4 @@
-module pc_src (
+module pc_comp (
   input logic branch,
   input logic branch_taken,
   input logic jump,
