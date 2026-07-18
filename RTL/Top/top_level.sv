@@ -15,3 +15,4 @@ module top #(
   logic [XLEN-1:0] next_pc;
   logic [XLEN-1:0] PCPlus4;
   logic [XLEN-1:0] PCTarget;
+  logic [XLEN-1:0] PCResult;
