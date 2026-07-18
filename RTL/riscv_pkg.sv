@@ -93,12 +93,10 @@ package riscv_pkg;
     ALU_PASS_B
   } alu_ctrl_e;
 
-  typedef enum logic [2:0] {
+  typedef enum logic [1:0] {
     RESULT_ALU,     
     RESULT_MEM,
-    RESULT_PCPLUS4,
-    RESULT_IMM,
-    RESULT_PCTARGET
+    RESULT_PCPLUS4
 } result_src_e;
 
   typedef enum logic {
