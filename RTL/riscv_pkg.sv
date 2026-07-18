@@ -99,6 +99,12 @@ package riscv_pkg;
     RESULT_PCPLUS4
 } result_src_e;
 
+  typedef enum logic [1:0] {
+    PC_PLUS4,
+    PC_TARGET,
+    PC_RESULT
+  } pc_src_e;
+
   typedef enum logic {
     ALU_SRC_RS2,
     ALU_SRC_IMM
