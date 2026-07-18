@@ -129,7 +129,7 @@ module main_decoder (
       end
 
       OP_AUIPC: begin
-        result_src = RESULT_PCTARGET;        
+        result_src = RESULT_ALU;        
         mem_write  = 1'b0;        
         mem_read   = 1'b0;
         alu_src    = 1'b1;        
