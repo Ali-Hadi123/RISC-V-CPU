@@ -9,6 +9,7 @@ module mux3 #(parameter WIDTH = 32) (
       2'b00: result = a;
       2'b01: result = b;
       2'b10: result = c;
+      default: result = {WIDTH{0}};
     endcase
   end
 
