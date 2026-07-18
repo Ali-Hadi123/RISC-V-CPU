@@ -9,4 +9,9 @@ module top #(
   input logic rst
 );
 
-  
+  //Initializng pc variables:
+
+  logic [XLEN-1:0] pc;
+  logic [XLEN-1:0] next_pc;
+  logic [XLEN-1:0] PCPlus4;
+  logic [XLEN-1:0] PCTarget;
