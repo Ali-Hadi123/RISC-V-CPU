@@ -28,4 +28,7 @@ module top #(
   alu_src_e alu_src;
   instr_fmt_e imm_src;
   logic reg_write;
-  
+  alu_ctrl_e alu_ctrl;
+  mem_size_e mem_size;
+  logic mem_unsigned;
+  pc_src_e pc_src;
