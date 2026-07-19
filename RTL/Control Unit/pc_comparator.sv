@@ -9,9 +9,9 @@ module pc_comp (
 );
 
   always_comb begin
-    if (is_jal && is_jalr)
+    if (is_jalr)
       pc_src = PC_RESULT;
-    else if (is_jal || (is_branch & branch_taken))
+    else if (is_jal | (is_branch & branch_taken))
       pc_src = PC_TARGET;
     else
       pc_src = PC_PLUS4;
