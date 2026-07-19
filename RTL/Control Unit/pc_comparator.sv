@@ -1,3 +1,5 @@
+import riscv_pkg::*;
+
 module pc_comp (
   input logic branch,
   input logic branch_taken,
