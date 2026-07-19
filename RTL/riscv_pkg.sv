@@ -107,7 +107,7 @@ package riscv_pkg;
   } pc_src_e;
 
   typedef enum logic {
-    ALU_SRC_RS2,
+    ALU_SRC_RD2,
     ALU_SRC_IMM
   } alu_src_e;
 
