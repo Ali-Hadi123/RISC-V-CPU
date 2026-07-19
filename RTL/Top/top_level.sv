@@ -9,10 +9,20 @@ module top #(
   input logic rst
 );
 
-  //Initializng pc variables:
-
+  //Initializations: 
+  
+  //pc:
   logic [XLEN-1:0] pc;
   logic [XLEN-1:0] next_pc;
   logic [XLEN-1:0] PCPlus4;
   logic [XLEN-1:0] PCTarget;
   logic [XLEN-1:0] PCResult;
+
+  //instr:
+  logic [ILEN-1:0] instr;
+
+  //Control Signals:
+  result_src_e result_src;
+  logic mem_read;
+  logic mem_write;
+  
