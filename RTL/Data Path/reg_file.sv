@@ -14,6 +14,6 @@ module regf (
   assign rdata2 = (rs2 == 0) ? 0 : regs[rs2];
 
   always_ff
-    if (reg_write && rd != 0)
+    if (reg_write & rd != 0)
       regs[rd] <= wd;
 endmodule
