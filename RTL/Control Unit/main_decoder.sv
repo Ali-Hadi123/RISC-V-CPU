@@ -11,8 +11,9 @@ module main_decoder (
   output logic reg_write,
   output logic illegal_instr,
 
-  output logic branch,
-  output logic jump,
+  output logic is_branch,
+  output logic is_jal,
+  output logic is_jalr,
   
   output alu_op_e alu_op
 );
@@ -21,8 +22,9 @@ module main_decoder (
 
     // Creating safe signals as a default case.
     
-    branch     = 1'b0;
-    jump       = 1'b0;           // PCnext is PC + 4 as a default
+    is_branch = 1'b0;
+    is_jal = 1'b0;          
+    is_jalr = 1'b0;             // PCnext is PC + 4 as a default
     
     result_src = RESULT_ALU;     // ALU result
     mem_write  = 1'b0;           // Never write memory by default
@@ -79,7 +81,7 @@ module main_decoder (
       end
 
       OP_BRANCH: begin
-        branch = 1'b1;
+        is_branch = 1'b1;
         
         result_src = RESULT_ALU;
         mem_write = 1'b0;
@@ -92,7 +94,7 @@ module main_decoder (
       end
 
       OP_JAL: begin
-        jump = 1'b1;
+        is_jal = 1'b1;
         
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
@@ -105,7 +107,7 @@ module main_decoder (
       end
 
       OP_JALR: begin
-        jump = 1'b1;
+        is_jalr = 1'b1;
         
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
