@@ -29,7 +29,7 @@ module main_decoder (
     result_src = RESULT_ALU;     // ALU result
     mem_write  = 1'b0;           // Never write memory by default
     mem_read   = 1'b0;           // Never load memory by default
-    alu_src    = 1'b0;           // Use register operand (RD2)
+    alu_src    = ALU_SRC_RD2;    // Use register operand (RD2)
     imm_src    = FMT_I;          // Doesn't matter unless ALUSrc=1
     reg_write  = 1'b0;           // Don't write registers
     alu_op     = ALUOP_ADD;      // Default ALU operation (typically ADD)
@@ -40,7 +40,7 @@ module main_decoder (
         result_src = RESULT_ALU;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = ALU_SRC_RS2;
+        alu_src = ALU_SRC_RD2;
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_FUNCT;
@@ -86,7 +86,7 @@ module main_decoder (
         result_src = RESULT_ALU;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = ALU_SRC_RS2;
+        alu_src = ALU_SRC_RD2;
         imm_src = FMT_B;
         reg_write = 1'b0;
         alu_op = ALUOP_BRANCH;
@@ -134,7 +134,7 @@ module main_decoder (
         result_src = RESULT_PCTARGET;        
         mem_write  = 1'b0;        
         mem_read   = 1'b0;
-        alu_src    = ALU_SRC_RS2;        
+        alu_src    = ALU_SRC_RD2;        
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
         alu_op     = ALUOP_ADD_PC;
