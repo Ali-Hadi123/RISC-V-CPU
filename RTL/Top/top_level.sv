@@ -25,4 +25,7 @@ module top #(
   result_src_e result_src;
   logic mem_read;
   logic mem_write;
+  alu_src_e alu_src;
+  instr_fmt_e imm_src;
+  logic reg_write;
   
