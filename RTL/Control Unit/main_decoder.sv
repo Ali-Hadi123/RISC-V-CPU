@@ -137,7 +137,7 @@ module main_decoder (
         alu_src    = ALU_SRC_RD2;        
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
-        alu_op     = ALUOP_ADD_PC;
+        alu_op     = ALUOP_ADD;
         illegal_instr = 1'b0;
       end
 
