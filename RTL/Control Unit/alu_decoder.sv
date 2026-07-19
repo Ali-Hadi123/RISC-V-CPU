@@ -21,7 +21,6 @@ module alu_decoder (
     unique case(alu_op)
       ALUOP_ADD: alu_ctrl = ALU_ADD;
       ALUOP_BRANCH: alu_ctrl = ALU_SUB;
-      ALUOP_ADD_PC: alu_ctrl = ALU_ADD;
       ALUOP_PASS_B: alu_ctrl = ALU_PASS_B;
       
       ALUOP_FUNCT: begin
