@@ -6,7 +6,7 @@ module main_decoder (
   output result_src_e result_src,
   output logic mem_read,
   output logic mem_write,
-  output logic alu_src,
+  output alu_src_e alu_src,
   output instr_fmt_e imm_src,
   output logic reg_write,
   output logic illegal_instr,
