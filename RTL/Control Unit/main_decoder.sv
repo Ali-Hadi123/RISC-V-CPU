@@ -40,7 +40,7 @@ module main_decoder (
         result_src = RESULT_ALU;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = 1'b0;
+        alu_src = ALU_SRC_RS2;
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_FUNCT;
@@ -51,7 +51,7 @@ module main_decoder (
         result_src = RESULT_ALU;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = 1'b1;
+        alu_src = ALU_SRC_IMM;
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_FUNCT;
@@ -62,7 +62,7 @@ module main_decoder (
         result_src = RESULT_MEM;
         mem_write = 1'b0;
         mem_read   = 1'b1;
-        alu_src = 1'b1;
+        alu_src = ALU_SRC_IMM;
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
@@ -73,7 +73,7 @@ module main_decoder (
         result_src = RESULT_ALU;
         mem_write = 1'b1;
         mem_read   = 1'b0;
-        alu_src = 1'b1;
+        alu_src = ALU_SRC_IMM;
         imm_src = FMT_S;
         reg_write = 1'b0;
         alu_op = ALUOP_ADD;
@@ -86,7 +86,7 @@ module main_decoder (
         result_src = RESULT_ALU;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = 1'b0;
+        alu_src = ALU_SRC_RS2;
         imm_src = FMT_B;
         reg_write = 1'b0;
         alu_op = ALUOP_BRANCH;
@@ -99,7 +99,7 @@ module main_decoder (
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = 1'b1;
+        alu_src = ALU_SRC_IMM;
         imm_src = FMT_J;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
@@ -112,7 +112,7 @@ module main_decoder (
         result_src = RESULT_PCPLUS4;
         mem_write = 1'b0;
         mem_read   = 1'b0;
-        alu_src = 1'b1;
+        alu_src = ALU_SRC_IMM;
         imm_src = FMT_I;
         reg_write = 1'b1;
         alu_op = ALUOP_ADD;
@@ -123,7 +123,7 @@ module main_decoder (
         result_src = RESULT_ALU;        
         mem_write  = 1'b0;     
         mem_read   = 1'b0;
-        alu_src    = 1'b1;        
+        alu_src    = ALU_SRC_IMM;        
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
         alu_op     = ALUOP_PASS_B;
@@ -134,7 +134,7 @@ module main_decoder (
         result_src = RESULT_PCTARGET;        
         mem_write  = 1'b0;        
         mem_read   = 1'b0;
-        alu_src    = 1'b1;        
+        alu_src    = ALU_SRC_RS2;        
         imm_src    = FMT_U;       
         reg_write  = 1'b1;           
         alu_op     = ALUOP_ADD_PC;
