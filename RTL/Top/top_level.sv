@@ -54,3 +54,144 @@ module top #(
   logic is_branch, is_jal, is_jalr;
   alu_op_e alu_op;
   logic illegal_instr_main;
+
+  main_decoder u_main_decoder(
+    .op_code(op_code),
+    .result_src(result_src),
+    .mem_read(mem_read),
+    .mem_write(mem_write),
+    .alu_src(alu_src),
+    .imm_src(imm_src),
+    .reg_write(reg_write),
+    .illegal_instr_main(illegal_instr_main),
+    .is_branch(is_branch),
+    .is_jal(is_jal),
+    .is_jalr(is_jalr),
+    .alu_op(alu_op)
+  );
+
+  alu_ctrl_e alu_ctrl;
+  logic illegal_instr_alu;
+
+  alu_decoder u_alu_decoder(
+    .op_code(op_code),
+    .alu_op(alu_op),
+    .funct3(funct3),
+    .funct7(funct7),
+    .alu_ctrl(alu_ctrl),
+    .illegal_instr_alu(illegal_instr_alu)
+  );
+
+  mem_size_e mem_size;
+  logic mem_unsigned;
+  logic illegal_instr_mem;
+
+  mem_decoder u_mem_decoder(
+    .op_code(op_code),
+    .funct3(funct3),
+    .mem_size(mem_size),
+    .mem_unsigned(mem_unsigned),
+    .illegal_instr_mem(illegal_instr_mem)
+  );
+
+  logic [XLEN-1:0] imm_out;
+
+  imm_gen u_imm_gen( //Despite imm_gen handling instruction field extraction, it's placed here because it required imm_src.
+    .instr(instr),
+    .imm_src(imm_src),
+    .imm_out(imm_out)
+  );
+
+  //Register File:
+
+  logic [XLEN-1:0] read_data_1, read_data_2;
+  logic [XLEN-1:0] write_data;
+
+  regf u_regf(
+    .clk(clk)
+    .rs1(rs1_addr),
+    .rs2(rs2_addr),
+    .rd(rd_addr),
+    .wd(write_data),
+    .reg_write(reg_write),
+    .rdata1(read_data_1),
+    .rdata2(read_data_2)
+  );
+
+  //Execution:
+
+  logic [XLEN-1:0] alu_b
+
+  mux2 #(.WIDTH(XLEN)) u_alu_src_b_mux(
+    .a(imm_out),
+    .b(read_data_2),
+    .sel(alu_src),
+    .result(alu_b)
+  );
+
+  logic [XLEN-1:0] alu_result;
+  logic alu_zero, alu_less, alu_less_u;
+
+  alu u_alu(
+    .alu_ctrl(alu_ctrl),
+    .a(read_data_1),
+    .b(alu_b),
+    .result(alu_result),
+    .is_zero(alu_zero),
+    .is_less(alu_less),
+    .is_less_u(alu_less_u)
+  );
+
+  logic branch_taken;
+  logic illegal_instr_branch;
+
+  branch_decoder u_branch_decoder(
+    .funct3(funct3_branch_e'(funct3)),
+    .is_zero(alu_zero),
+    .is_less(alu_less),
+    .is_less_u(alu_less_u),
+    .branch_taken(branch_taken),
+    .illegal_instr_branch(illegal_instr_branch)
+  );
+
+  //Computing Next PC:
+
+  logic [XLEN-1:0] pc_plus4, pc_target;
+
+  adder #(.WIDTH(XLEN)) u_pc_plus4_adder(
+    .a(pc_out),
+    .b(XLEN'(4)),
+    .sum(pc_plus4)
+  );
+
+  adder #(.WIDTH(XLEN)) u_pc_target_adder(
+    .a(pc_out),
+    .b(imm_out),
+    .sum(pc_target)
+  );
+
+  pc_src_e pc_src;
+
+  pc_comparator u_pc_comparator(
+    .is_branch(is_branch),
+    .branch_taken(branch_taken),
+    .is_jal(is_jal),
+    .is_jalr(is_jalr),
+    .pc_src(pc_src)
+  );
+
+  logic [XLEN-1:0] pc_mux_out;
+  
+  mux3 #(.WIDTH(XLEN)) u_pc_mux(
+    .a(pc_plus4),
+    .b(pc_target),
+    .c(alu_result),
+    .sel(pc_src),
+    .result(pc_mux_out)
+  );
+
+  assign next_pc = {pc_mux_out[XLEN-1:1], 1'b0}; //LSB set to 0 to handle JALR instructions.
+
+  //Handling Memory:
+
+  
