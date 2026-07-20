@@ -120,7 +120,7 @@ module top #(
 
   //Execution:
 
-  logic [XLEN-1:0] alu_b
+  logic [XLEN-1:0] alu_b;
 
   mux2 #(.WIDTH(XLEN)) u_alu_src_b_mux(
     .a(imm_out),
