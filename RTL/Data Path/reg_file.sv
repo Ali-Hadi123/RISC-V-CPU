@@ -13,7 +13,7 @@ module regf (
   assign rdata1 = (rs1 == 0) ? 0 : regs[rs1];
   assign rdata2 = (rs2 == 0) ? 0 : regs[rs2];
 
-  always_ff
+  always_ff @(posedge clk)
     if (reg_write & rd != 0)
       regs[rd] <= wd;
 endmodule
