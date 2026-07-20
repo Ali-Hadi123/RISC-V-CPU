@@ -6,7 +6,8 @@ module top #(
   parameter init_mem = ""
 )(
   input logic clk,
-  input logic rst
+  input logic rst,
+  output illegal_instr
 );
 
   //Fetching Instructions:
@@ -215,5 +216,10 @@ module top #(
     .sel(result_src),
     .result(write_data)
   );
+
+  //Detecting Illegal Instructions:
+
+  logic illegal_instr;
+  assign illegal_instr = illegal_instr_main | illegal_instr_alu | illegal_instr_mem | (is_branch & illegal_instr_branch);
 
 endmodule
