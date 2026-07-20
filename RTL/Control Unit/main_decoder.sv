@@ -9,7 +9,7 @@ module main_decoder (
   output alu_src_e alu_src,
   output instr_fmt_e imm_src,
   output logic reg_write,
-  output logic illegal_instr,
+  output logic illegal_instr_main,
 
   output logic is_branch,
   output logic is_jal,
