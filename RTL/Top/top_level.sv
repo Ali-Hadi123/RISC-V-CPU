@@ -192,6 +192,28 @@ module top #(
 
   assign next_pc = {pc_mux_out[XLEN-1:1], 1'b0}; //LSB set to 0 to handle JALR instructions.
 
-  //Handling Memory:
+  //Handling Memory and Writeback:
 
-  
+  logic [XLEN-1:0] mem_read_data;
+
+  dmem #(.ram_size(ram_size)) u_dmem(
+    .clk(clk),
+    .byte_addr(alu_result),
+    .wdata(read_data_2),
+    .mem_read(mem_read),
+    .mem_write(mem_write),
+    .mem_size(mem_size),
+    .mem_unsigned(mem_unsigned),
+    .read_data(mem_read_data)
+  );
+
+  mux4 #(.WIDTH(XLEN)) u_writeback_mux(
+    .a(alu_result),
+    .b(mem_read_data),
+    .c(pc_plus4),
+    .d(pc_target),
+    .sel(result_src),
+    .result(write_data)
+  );
+
+endmodule
