@@ -33,7 +33,7 @@ module main_decoder (
     imm_src    = FMT_I;          // Doesn't matter unless ALUSrc=1
     reg_write  = 1'b0;           // Don't write registers
     alu_op     = ALUOP_ADD;      // Default ALU operation (typically ADD)
-    illegal_instr = 1'b0;       // Assumes valid instruction
+    illegal_instr = 1'b1;       // Assumes invalid instruction
     
     unique case(op_code)
       OP_ARTH_REG: begin
