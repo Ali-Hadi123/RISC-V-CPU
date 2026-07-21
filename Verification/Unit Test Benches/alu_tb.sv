@@ -55,7 +55,7 @@ module alu_tb;
 
     data_a = 32'd0;    //Ensuring all signals are cleared before testing.
     data_b = 32'd0;
-    tb_alu_ctrl = '0;
+    tb_alu_ctrl = ALU_ADD;
 
     #10;
 
