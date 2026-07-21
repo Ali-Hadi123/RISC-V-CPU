@@ -69,4 +69,11 @@ module alu_tb;
     verify_alu(32'd5, -32'd10, ALU_SLT, 32'd0, 1'b0, 1'b0, 1'b1, "Test 6: SLT") //Testing 5 < -10 = False
     verify_alu(32'd5, -32'd10, ALU_SLTU, 32'd1, 1'b0, 1'b0, 1'b1, "Test 7: SLTU") //Testing 5 < -10 = True (unsigned)
     verify_alu(32'd7, 32'd2, ALU_SLL, 32'd28, 1'b0, 1'b0, 1'b0, "Test 8: SLL") //Testing 7 << 2 = 28
-    verify_alu(32'd7, 32'd2, ALU_SLL, 32'd28, 1'b0, 1'b0, 1'b0, "Test 8: SLL") //Testing 7 << 2 = 28
+    verify_alu(32'd53, 32'd3, ALU_SRL, 32'd7, 1'b0, 1'b0, 1'b0, "Test 9: SRL") //Testing 53 >> 3 = 7
+    verify_alu(-32'b1000, 32'b10, ALU_SRA, -32'b100, 1'b0, 1'b1, 1'b0, "Test 10: SRA") //Testing -16 >> 2 = -4
+    verify_alu(32'd5, 32'd2, ALU_PASS_B, 32'd2, 1'b0, 1'b0, 1'b0, "Test 11: PASS B") //Testing 7 << 2 = 28
+
+    $display("ALU TESTING COMPLETED!");
+    $display("Results: %0d", passed_tests, "/%0d", total_tests, " passed.")
+  end
+endmodule
