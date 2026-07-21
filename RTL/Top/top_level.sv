@@ -7,7 +7,7 @@ module top #(
 )(
   input logic clk,
   input logic rst,
-  output illegal_instr
+  output logic illegal_instr
 );
 
   //Fetching Instructions:
@@ -95,6 +95,21 @@ module top #(
     .illegal_instr_mem(illegal_instr_mem)
   );
 
+  logic branch_taken;
+  logic illegal_instr_branch;
+
+  branch_decoder u_branch_decoder(
+    .funct3(funct3_branch_e'(funct3)),
+    .is_zero(alu_zero),
+    .is_less(alu_less),
+    .is_less_u(alu_less_u),
+    .branch_taken(branch_taken),
+    .illegal_instr_branch(illegal_instr_branch)
+  );
+  
+  //Detecting Illegal Instructions:
+  assign illegal_instr = illegal_instr_main | illegal_instr_alu | illegal_instr_mem | (is_branch & illegal_instr_branch);
+
   logic [XLEN-1:0] imm_out;
 
   imm_gen u_imm_gen( //Despite imm_gen handling instruction field extraction, it's placed here because it required imm_src.
@@ -108,13 +123,16 @@ module top #(
   logic [XLEN-1:0] read_data_1, read_data_2;
   logic [XLEN-1:0] write_data;
 
+  logic reg_write_safe;
+  assign reg_write_safe = reg_write & ~illegal_instr; //Ensures reg_write can't accidently be 
+                                                      //set to high due to an invalid instruction. 
   regf u_regf(
     .clk(clk)
     .rs1(rs1_addr),
     .rs2(rs2_addr),
     .rd(rd_addr),
     .wd(write_data),
-    .reg_write(reg_write),
+    .reg_write(reg_write_safe),
     .rdata1(read_data_1),
     .rdata2(read_data_2)
   );
@@ -141,18 +159,6 @@ module top #(
     .is_zero(alu_zero),
     .is_less(alu_less),
     .is_less_u(alu_less_u)
-  );
-
-  logic branch_taken;
-  logic illegal_instr_branch;
-
-  branch_decoder u_branch_decoder(
-    .funct3(funct3_branch_e'(funct3)),
-    .is_zero(alu_zero),
-    .is_less(alu_less),
-    .is_less_u(alu_less_u),
-    .branch_taken(branch_taken),
-    .illegal_instr_branch(illegal_instr_branch)
   );
 
   //Computing Next PC:
@@ -191,18 +197,25 @@ module top #(
     .result(pc_mux_out)
   );
 
-  assign next_pc = {pc_mux_out[XLEN-1:1], 1'b0}; //LSB set to 0 to handle JALR instructions.
+  logic next_pc_normal;
+  assign next_pc_normal = {pc_mux_out[XLEN-1:1], 1'b0}; //LSB set to 0 to handle JALR instructions.
+
+  assign next_pc = illegal_instr ? pc_out : next_pc_normal; //Freezes the pc in the case of an illegal instruction.
 
   //Handling Memory and Writeback:
 
   logic [XLEN-1:0] mem_read_data;
 
+  logic mem_read_safe, mem_write_safe;
+  assign mem_read_safe = mem_read & ~illegal_instr;
+  assign mem_write_safe = mem_write & ~illegal_instr;
+  
   dmem #(.ram_size(ram_size)) u_dmem(
     .clk(clk),
     .byte_addr(alu_result),
     .wdata(read_data_2),
-    .mem_read(mem_read),
-    .mem_write(mem_write),
+    .mem_read(mem_read_safe),
+    .mem_write(mem_write_safe),
     .mem_size(mem_size),
     .mem_unsigned(mem_unsigned),
     .read_data(mem_read_data)
@@ -216,10 +229,5 @@ module top #(
     .sel(result_src),
     .result(write_data)
   );
-
-  //Detecting Illegal Instructions:
-
-  logic illegal_instr;
-  assign illegal_instr = illegal_instr_main | illegal_instr_alu | illegal_instr_mem | (is_branch & illegal_instr_branch);
 
 endmodule
