@@ -68,4 +68,5 @@ module alu_tb;
     verify_alu(32'b111, 32'b101, ALU_XOR, 32'b010, 1'b0, 1'b0, 1'b0, "Test 5: XOR") //Testing 111 ^ 101 = 010
     verify_alu(32'd5, -32'd10, ALU_SLT, 32'd0, 1'b0, 1'b0, 1'b1, "Test 6: SLT") //Testing 5 < -10 = False
     verify_alu(32'd5, -32'd10, ALU_SLTU, 32'd1, 1'b0, 1'b0, 1'b1, "Test 7: SLTU") //Testing 5 < -10 = True (unsigned)
-    verify_alu(32'd5, -32'd10, ALU_SLT, 32'd0, 1'b0, 1'b0, 1'b1, "Test 6: SLT") //Testing 5 < -10 = False
+    verify_alu(32'd7, 32'd2, ALU_SLL, 32'd28, 1'b0, 1'b0, 1'b0, "Test 8: SLL") //Testing 7 << 2 = 28
+    verify_alu(32'd7, 32'd2, ALU_SLL, 32'd28, 1'b0, 1'b0, 1'b0, "Test 8: SLL") //Testing 7 << 2 = 28
