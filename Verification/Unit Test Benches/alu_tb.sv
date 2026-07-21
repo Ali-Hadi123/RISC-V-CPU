@@ -4,7 +4,7 @@ import riscv_pkg::*;
 module alu_tb;
 
   logic [XLEN-1:0] data_a, data_b;
-  logic alu_ctrl_e tb_alu_ctrl;
+  alu_ctrl_e tb_alu_ctrl;
   logic [XLEN-1:0] tb_result;
   logic tb_zero, tb_less, tb_less_u;
 
