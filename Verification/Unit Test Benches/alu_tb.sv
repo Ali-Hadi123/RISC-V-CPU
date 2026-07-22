@@ -41,7 +41,7 @@ module alu_tb;
 
     total_tests++;
 
-    if (tb_result === exp_result && tb_zero === exp_zero && tb_less === exp_less && tb_less_u === exp_less_u) begin
+    assert (tb_result === exp_result && tb_zero === exp_zero && tb_less === exp_less && tb_less_u === exp_less_u) begin
       passed_tests++;
       $display("Passed: %s", test_name);
     end
