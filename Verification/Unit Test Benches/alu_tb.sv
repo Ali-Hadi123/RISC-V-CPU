@@ -67,12 +67,12 @@ module alu_tb;
     verify_alu(32'd56, 32'd44, ALU_ADD, 32'd100, 1'b0, 1'b0, 1'b0, "Test 1: Addition"); //Testing 56 + 44 = 100
     verify_alu(32'd1, 32'd53, ALU_SUB, -32'd52, 1'b0, 1'b1, 1'b1, "Test 2: Subtraction"); //Testing 1 - 53 = -52
     verify_alu(32'b10111, 32'b10101, ALU_AND, 32'b10101, 1'b0, 1'b0, 1'b0, "Test 3: AND"); //Testing 10111 & 10101 = 10101
-    verify_alu(32'b0011, 32'b1011, ALU_OR, 32'b1011, 1'b0, 1'b0, 1'b0, "Test 4: OR"); //Testing 0011 | 1011 = 1011
+    verify_alu(32'b0011, 32'b1011, ALU_OR, 32'b1011, 1'b0, 1'b1, 1'b1, "Test 4: OR"); //Testing 0011 | 1011 = 1011
     verify_alu(32'b111, 32'b101, ALU_XOR, 32'b010, 1'b0, 1'b0, 1'b0, "Test 5: XOR"); //Testing 111 ^ 101 = 010
-    verify_alu(32'd5, -32'd10, ALU_SLT, 32'd0, 1'b0, 1'b0, 1'b1, "Test 6: SLT"); //Testing 5 < -10 = False
+    verify_alu(32'd5, -32'd10, ALU_SLT, 32'd0, 1'b1, 1'b0, 1'b1, "Test 6: SLT"); //Testing 5 < -10 = False
     verify_alu(32'd5, -32'd10, ALU_SLTU, 32'd1, 1'b0, 1'b0, 1'b1, "Test 7: SLTU"); //Testing 5 < -10 = True (unsigned)
     verify_alu(32'd7, 32'd2, ALU_SLL, 32'd28, 1'b0, 1'b0, 1'b0, "Test 8: SLL"); //Testing 7 << 2 = 28
-    verify_alu(32'd53, 32'd3, ALU_SRL, 32'd7, 1'b0, 1'b0, 1'b0, "Test 9: SRL"); //Testing 53 >> 3 = 7
+    verify_alu(32'd64, 32'd3, ALU_SRL, 32'd8, 1'b0, 1'b0, 1'b0, "Test 9: SRL"); //Testing 64 >> 3 = 8
     verify_alu(-32'b10000, 32'b10, ALU_SRA, -32'b100, 1'b0, 1'b1, 1'b0, "Test 10: SRA"); //Testing -16 >> 2 = -4
     verify_alu(32'd5, 32'd2, ALU_PASS_B, 32'd2, 1'b0, 1'b0, 1'b0, "Test 11: PASS B"); //Testing pass b
 
