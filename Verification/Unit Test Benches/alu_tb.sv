@@ -75,6 +75,7 @@ module alu_tb;
     verify_alu(32'd64, 32'd3, ALU_SRL, 32'd8, 1'b0, 1'b0, 1'b0, "Test 9: SRL"); //Testing 64 >> 3 = 8
     verify_alu(-32'b10000, 32'b10, ALU_SRA, -32'b100, 1'b0, 1'b1, 1'b0, "Test 10: SRA"); //Testing -16 >> 2 = -4
     verify_alu(32'd5, 32'd2, ALU_PASS_B, 32'd2, 1'b0, 1'b0, 1'b0, "Test 11: PASS B"); //Testing pass b
+    verify_alu(32'd1, 32'd6, 4'b1111, 32'd0, 1'b1, 1'b1, 1'b1, "Test 11: Invalid Ctrl"); //Testing response to invalid ctrl
 
     $display("ALU TESTING COMPLETED!");
     $display("Results: %0d/%0d tests passed.", passed_tests, total_tests);
