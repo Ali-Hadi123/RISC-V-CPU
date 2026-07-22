@@ -49,4 +49,15 @@ module imm_gen_tb;
 
     $display("STARTING IMM GEN TESTING:")
 
-    verify_imm_gen();
+    verify_imm_gen(32'h0000_0093, FMT_I, 32'h0000_0000, "Test 1: I type (addi rd, rs1, 0)."); 
+    verify_imm_gen(32'hABC0_0093, FMT_I, 32'hFFFF_FABC, "Test 2: I type (addi rd, rs1, -1348)."); 
+    verify_imm_gen(32'h1200_21A3, FMT_S, 32'h0000_0123, "Test 3: S type.");
+    verify_imm_gen(32'h4000_0063, FMT_B, 32'h0000_0400, "Test 4: B type.");
+    verify_imm_gen(32'h8000_0037, FMT_U, 32'h8000_0000, "Test 5: U type.");
+    verify_imm_gen(32'h8000_006F, FMT_J, 32'hFFF0_0000, "Test 6: J type.");
+    verify_imm_gen(32'h8000_006F, 5'b11111, 32'b0, "Test 7: Invalid imm_src value.");
+
+    $display("IMM GENERATOR TESTING COMPLETE!");
+    $display("Results: %0d/%0d tests passed.", passed_tests, total_tests);
+  end
+endmodule
