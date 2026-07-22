@@ -1,5 +1,4 @@
 //imm_gen is hardcoded for RV32I since different instruction sets (e.g. RV64I) would require different splicing.
-
 import riscv_pkg::*;
 
 module imm_gen (
