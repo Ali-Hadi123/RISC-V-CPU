@@ -9,7 +9,7 @@ module imm_gen (
   //Obtaining the immediate from the instruction differently based on what type of instruction imm_scr reports.
   
   always_comb            
-    unique case(imm_scr)  
+    unique case(imm_src)  
       FMT_I: imm_out = {{20{instr[31]}}, instr[31:20]};
       FMT_S: imm_out = {{20{instr[31]}}, instr[31:25], instr[11:7]};
       FMT_B: imm_out = {{19{instr[31]}}, instr[31], instr[7], instr[30:25], instr[11:8], 1'b0};
