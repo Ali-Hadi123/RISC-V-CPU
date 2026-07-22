@@ -47,7 +47,7 @@ module imm_gen_tb;
 
     #10;
 
-    $display("STARTING IMM GEN TESTING:")
+    $display("STARTING IMM GEN TESTING:");
 
     verify_imm_gen(32'h0000_0093, FMT_I, 32'h0000_0000, "Test 1: I type (addi rd, rs1, 0)."); 
     verify_imm_gen(32'hABC0_0093, FMT_I, 32'hFFFF_FABC, "Test 2: I type (addi rd, rs1, -1348)."); 
