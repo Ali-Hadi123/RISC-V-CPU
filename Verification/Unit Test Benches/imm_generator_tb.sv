@@ -39,8 +39,8 @@ module imm_gen_tb;
   endtask
 
   initial begin
-    $dumpfile("imm_generator_tb.vcd");
-    $dumpvars(0, imm_generator_tb);
+    $dumpfile("imm_gen_tb.vcd");
+    $dumpvars(0, imm_gen_tb);
 
     tb_instr = 32'd0;    //Clearing signals and values.
     tb_imm_src = FMT_I;
