@@ -26,14 +26,13 @@ module regf_tb;
 
   //Concurrent assert statements for testing (these tests are constantly being ran):
   
-  property x0_value;
-    @(posedge clk) (tb_rs1 == 5'b0) |-> (tb_rdata1 == 32'b0);
-  endproperty
-  
-  assert property(x0_value)
-    $display("x0 holds 0 is true, test PASSED.");
-  else
-    $error("x0 does NOT hold 0, test FAILED.");
+always @(posedge clk) begin
+    if (tb_rs1 == 5'd0) begin
+        assert (tb_rdata1 == 32'd0)
+        else
+            $error("x0 is not zero!");
+    end
+end
 
   task write_reg(
     input [REG_ADDR_W-1:0] rn,
