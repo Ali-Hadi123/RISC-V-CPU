@@ -23,3 +23,6 @@ module regf_tb;
   );
 
   always #10 clk = ~clk;
+
+  property p_x0_value;
+    @(posedge clk)
