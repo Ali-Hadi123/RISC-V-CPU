@@ -22,7 +22,30 @@ module regf_tb;
     .rdata2(tb_rdata2)
   );
 
-  always #10 clk = ~clk;
+  always #5 clk = ~clk;
 
-  property p_x0_value;
-    @(posedge clk)
+  property x0_value:
+    @(posedge clk) (tb_rs1 == 5'b0) |-> (tb_rdata1 == 32'b0);
+  endproperty
+
+  total_tests++;
+  
+  assert x0_value begin
+    passed_tests++;
+    $display("x0 holds 0 is true, test PASSED.");
+  end
+  else
+    $error("x0 does NOT hold 0, test FAILED.");
+
+  property write_then_read:
+    @(posedge clk) (reg_write && tb_rs1 != 0 && tb_rs1 == tb_rd) |=> (tb_rdata1 == $past(wd));
+  endproperty
+
+  total_tests++;
+
+  assert write_then_read begin
+    passed_tests++;
+    $display("Writing and then reading a register works, test PASSED.");
+  end
+  else
+    $error("Writing and then reading a register doesn't work, test FAILED.");
