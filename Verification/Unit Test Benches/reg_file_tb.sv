@@ -22,6 +22,7 @@ module regf_tb;
     .rdata2(tb_rdata2)
   );
 
+  logic clk = 0;
   always #5 clk = ~clk;
 
   property x0_value:
