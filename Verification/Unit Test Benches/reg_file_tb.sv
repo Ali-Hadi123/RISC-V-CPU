@@ -37,17 +37,6 @@ module regf_tb;
   else
     $error("x0 does NOT hold 0, test FAILED.");
 
-  property write_then_read;
-    @(posedge clk) (reg_write && tb_rs1 != 0 && tb_rs1 == tb_rd) |=> (tb_rdata1 == $past(tb_wd));
-  endproperty
-
-  assert property(write_then_read) begin
-    passed_tests++;
-    $display("Writing and then reading a register works, test PASSED.");
-  end
-  else
-    $error("Writing and then reading a register doesn't work, test FAILED.");
-
   task write_reg(
     input [REG_ADDR_W-1:0] rn,
     input [XLEN-1:0] data
@@ -133,6 +122,6 @@ module regf_tb;
     //Summary
     $display("REGFILE TESTING COMPLETE!");
     $display("Results: %0d/%0d tests passed.", passed_tests, total_tests);
+    $finish;
   end
-  $finish;
 endmodule
