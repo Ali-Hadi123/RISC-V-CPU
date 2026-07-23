@@ -22,7 +22,6 @@ module regf_tb;
     .rdata2(tb_rdata2)
   );
 
-  logic clk = 0;
   always #5 clk = ~clk;
 
   //Concurrent assert statements for testing (these tests are constantly being ran):
@@ -68,5 +67,51 @@ module regf_tb;
 
   task read_reg(input [REG_ADDR_W-1:0] rn);
     @(negedge clk);
-    rb_rs1 = rn;
-  endtask  
+    tb_rs1 = rn;
+  endtask
+
+  initial begin
+    clk = 0;
+    reg_write = 0;
+    rs1 = 0;
+    rs2 = 0;
+    rd = 0;
+    wd = 0;
+
+    $display("STARTING REGISTER FILE TESTING:")
+
+    write_reg(5'd5, 32'd123);              //Testing writing a value to x5 and then reading it.
+    read_reg(5'd5);
+    total_tests++;
+    assert (tb_rdata1 == 32'd123) begin
+      passed_tests++;
+      $display("Passed Test 1");
+    end
+    else
+      $error("Failed Test 1\nExpected: 32'd123\nGot: %0d", tb_rdata1);
+
+    write_reg(5'd8, 32'd456);       //Testing that different registers can be written to w/o overwriting data.
+    read_reg(5'd5);
+    total_tests++;
+    assert (tb_rdata1 == 32'd123) begin
+      passed_tests++;
+      $display("Passed Test 1");
+    end
+    else
+      $error("Failed Test 1\nExpected: 32'd123\nGot: %0d", tb_rdata1);
+
+    write_reg(5'd0, 32'hFFFF_FFFF);      //Testing that x0 can't be overwritten.
+    read_reg(5'd0);
+    total_tests++;
+    assert (tb_rdata1 == 32'0) begin
+      passed_tests++;
+      $display("Passed Test 3");
+    end
+    else
+      $error("Failed Test 3\nExpected: 32'0\nGot: %0d", tb_rdata1);
+
+    //Summary
+    $display("REGFILE TESTING COMPLETE!");
+    $display("Results: %0d/%0d tests passed.", passed_tests, total_tests);
+  end
+endmodule
