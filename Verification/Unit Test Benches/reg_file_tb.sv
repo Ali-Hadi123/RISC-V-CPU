@@ -23,16 +23,14 @@ module regf_tb;
   );
 
   always #5 clk = ~clk;
-
-  //Concurrent assert statements for testing (these tests are constantly being ran):
   
-always @(posedge clk) begin
-    if (tb_rs1 == 5'd0) begin
-        assert (tb_rdata1 == 32'd0)
-        else
-            $error("x0 is not zero!");
-    end
-end
+  always @(posedge clk) begin
+      if (tb_rs1 == 5'd0) begin
+          assert (tb_rdata1 == 32'd0)
+          else
+              $error("x0 is not zero!");
+      end
+  end
 
   task write_reg(
     input [REG_ADDR_W-1:0] rn,
