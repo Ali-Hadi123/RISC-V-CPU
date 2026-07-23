@@ -1,11 +1,11 @@
 import riscv_pkg::*;
 
 module regf (
-  input clk,
-  input [REG_ADDR_W-1:0] rs1, rs2, rd,
-  input [XLEN-1:0] wd,
-  input reg_write,
-  output [XLEN-1:0] rdata1, rdata2
+  input logic clk,
+  input logic [REG_ADDR_W-1:0] rs1, rs2, rd,
+  input logic [XLEN-1:0] wd,
+  input logic reg_write,
+  output logic [XLEN-1:0] rdata1, rdata2
 );
 
   logic [XLEN-1:0] regs [0:REG_COUNT-1];
