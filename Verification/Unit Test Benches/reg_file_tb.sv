@@ -24,7 +24,7 @@ module regf_tb;
 
   always #5 clk = ~clk;
   
-  always @(posedge clk) begin
+  always_ff @(posedge clk) begin
       if (tb_rs1 == 5'd0) begin
           assert (tb_rdata1 == 32'd0)
           else
