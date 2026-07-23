@@ -100,15 +100,24 @@ module regf_tb;
     else
       $error("Failed Test 1\nExpected: 32'd123\nGot: %0d", tb_rdata1);
 
+    read_reg(5'd8);                    //Testing reading from a different register.
+    total_tests++;
+    assert (tb_rdata1 == 32'd456) begin
+      passed_tests++;
+      $display("Passed Test 1");
+    end
+    else
+      $error("Failed Test 1\nExpected: 32'd123\nGot: %0d", tb_rdata1);
+
     write_reg(5'd0, 32'hFFFF_FFFF);      //Testing that x0 can't be overwritten.
     read_reg(5'd0);
     total_tests++;
     assert (tb_rdata1 == 32'0) begin
       passed_tests++;
-      $display("Passed Test 3");
+      $display("Passed Test 4");
     end
     else
-      $error("Failed Test 3\nExpected: 32'0\nGot: %0d", tb_rdata1);
+      $error("Failed Test 4\nExpected: 32'0\nGot: %0d", tb_rdata1);
 
     //Summary
     $display("REGFILE TESTING COMPLETE!");
