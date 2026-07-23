@@ -25,6 +25,8 @@ module regf_tb;
   logic clk = 0;
   always #5 clk = ~clk;
 
+  //Concurrent assert statements for testing (these tests are constantly being ran):
+  
   property x0_value:
     @(posedge clk) (tb_rs1 == 5'b0) |-> (tb_rdata1 == 32'b0);
   endproperty
@@ -59,6 +61,12 @@ module regf_tb;
     reg_write = 1'b1;
     tb_rd = rn;
     tb_wd = data;
+    
     @(negedge clk);
     reg_write = 1'b0;
   endtask
+
+  task read_reg(input [REG_ADDR_W-1:0] rn);
+    @(negedge clk);
+    rb_rs1 = rn;
+  endtask  
