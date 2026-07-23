@@ -50,3 +50,15 @@ module regf_tb;
   end
   else
     $error("Writing and then reading a register doesn't work, test FAILED.");
+
+  task write_reg(
+    input [REG_ADDR_W-1:0] rn,
+    input [XLEN-1:0] data
+  );
+    @(negedge clk);
+    reg_write = 1'b1;
+    tb_rd = rn;
+    tb_wd = data;
+    @(negedge clk);
+    reg_write = 1'b0;
+  endtask
