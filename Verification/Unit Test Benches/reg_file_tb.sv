@@ -71,6 +71,9 @@ module regf_tb;
   endtask
 
   initial begin
+    $dumpfile("reg_file_tb.vcd");
+    $dumpvars(0, reg_file_tb);
+    
     clk = 0;
     reg_write = 0;
     rs1 = 0;
