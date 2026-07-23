@@ -30,10 +30,8 @@ module regf_tb;
     @(posedge clk) (tb_rs1 == 5'b0) |-> (tb_rdata1 == 32'b0);
   endproperty
   
-  assert property(x0_value) begin
-    passed_tests++;
+  assert property(x0_value)
     $display("x0 holds 0 is true, test PASSED.");
-  end
   else
     $error("x0 does NOT hold 0, test FAILED.");
 
