@@ -44,5 +44,55 @@ module imem_tb;
       $display("Passed: %s", test_name);
     end
     else
-      $display("Failed: %s\nExpected instr = %h\nGot instr = %h", test_name, exp_instr, instr_init);
+      $error("Failed: %s\nExpected instr = %h\nGot instr = %h", test_name, exp_instr, instr_init);
   endtask
+
+  initial begin
+    $dumpfile("instr_mem_tb.vcd");
+    $dumpvars(0, imem_tb);
+
+    default_pc_addr = 32'd0;
+    init_pc_addr = 32'd0;
+
+    #10;
+
+    $display("STARTING IMEM TESTING!");
+
+    //Testing default imem:
+    total_tests++;
+    default_is_correct = 1'b1;
+
+    int word_index = 0;
+    for(word_index = 0; word_index < 1024; word_index++) begin
+      default_pc_addr = word_index * 4;
+
+      #10;
+
+      if (default_instr !== 32'h0000_0013) begin
+        default_is_correct = 1'b0;
+        $error(
+          "Failed: Default NOP check at word %0d (addr %h)\nExpected instr = 00000013\nGot instr = %h",
+          word_idx, pc_addr_default, instr_default
+        );
+      end
+    end
+
+    if (default_is_correct) begin
+      passed_tests++;
+      $display("Passed: Test 1: Default ROM fully NOP-filled (1024 words)");
+    end
+    
+    //Testiing initialized imem:
+    verify_init(32'h0000_0000, 32'h0000_0093, "Test 2: Word 0 loaded from hex file");
+    verify_init(32'h0000_0004, 32'h0011_0113, "Test 3: Word 1 loaded from hex file");
+    verify_init(32'h0000_0008, 32'h0022_0193, "Test 4: Word 2 loaded from hex file");
+    verify_init(32'h0000_003C, 32'hDEAD_BEEF, "Test 5: Last word (word 15) loaded from hex file");
+    verify_init(32'h0000_0001, 32'h0000_0093, "Test 6: Byte offset 1 aliases to word 0");
+    verify_init(32'h0000_0002, 32'h0000_0093, "Test 7: Byte offset 2 aliases to word 0");
+    verify_init(32'h0000_0003, 32'h0000_0093, "Test 8: Byte offset 3 aliases to word 0");
+    verify_init(32'h0000_0005, 32'h0011_0113, "Test 9: Byte offset 1 aliases to word 1");
+
+    $display("INSTRUCTION MEMORY TESTING COMPLETE!");
+    $display("Results: %0d/%0d tests passed.", passed_tests, total_tests);
+  end
+endmodule
