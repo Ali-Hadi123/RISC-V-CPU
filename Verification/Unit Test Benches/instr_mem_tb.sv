@@ -25,7 +25,7 @@ module imem_tb;
     .rom_size(16)
   ) duv_init (
     .pc_addr(default_pc_addr),
-    .instr(default_instr)
+    .instr(init_instr)
   );
 
   task verify_init(                      //Used to test the initialized imem.
@@ -33,13 +33,13 @@ module imem_tb;
     input logic [XLEN-1:0] exp_instr,
     input string test_name
   );
-    pc_addr_init = addr;
+    init_pc_addr = addr;
 
     #10;
 
     total_tests++;
  
-    assert (instr_init === exp_instr) begin
+    assert (init_instr === exp_instr) begin
       passed_tests++;
       $display("Passed: %s", test_name);
     end
@@ -60,9 +60,10 @@ module imem_tb;
 
     //Testing default imem:
     total_tests++;
+    logic default_is_correct;
     default_is_correct = 1'b1;
 
-    int word_index = 0;
+    int word_index;
     for(word_index = 0; word_index < 1024; word_index++) begin
       default_pc_addr = word_index * 4;
 
@@ -72,7 +73,7 @@ module imem_tb;
         default_is_correct = 1'b0;
         $error(
           "Failed: Default NOP check at word %0d (addr %h)\nExpected instr = 00000013\nGot instr = %h",
-          word_idx, pc_addr_default, instr_default
+          word_index, default_pc_addr, default_instr
         );
       end
     end
