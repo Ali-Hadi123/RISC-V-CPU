@@ -26,7 +26,7 @@ module imem_tb;
     .init_mem("imem_test.hex"),
     .rom_size(16)
   ) duv_init (
-    .pc_addr(default_pc_addr),
+    .pc_addr(init_pc_addr),
     .instr(init_instr)
   );
 
@@ -46,7 +46,7 @@ module imem_tb;
       $display("Passed: %s", test_name);
     end
     else
-      $error("Failed: %s\nExpected instr = %h\nGot instr = %h", test_name, exp_instr, instr_init);
+      $error("Failed: %s\nExpected instr = %h\nGot instr = %h", test_name, exp_instr, init_instr);
   endtask
 
   initial begin
