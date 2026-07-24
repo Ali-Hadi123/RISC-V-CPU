@@ -63,7 +63,7 @@ module imem_tb;
     logic default_is_correct;
     default_is_correct = 1'b1;
 
-    int word_index;
+    integer word_index;
     for(word_index = 0; word_index < 1024; word_index++) begin
       default_pc_addr = word_index * 4;
 
