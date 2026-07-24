@@ -5,6 +5,8 @@ module imem_tb;
 
   int unsigned total_tests = 0;
   int unsigned passed_tests = 0;
+  logic default_is_correct;
+  integer word_index;
 
   logic [XLEN-1:0] default_pc_addr;
   logic [XLEN-1:0] default_instr;
@@ -60,10 +62,8 @@ module imem_tb;
 
     //Testing default imem:
     total_tests++;
-    logic default_is_correct;
     default_is_correct = 1'b1;
 
-    integer word_index;
     for(word_index = 0; word_index < 1024; word_index++) begin
       default_pc_addr = word_index * 4;
 
